@@ -11,7 +11,12 @@
         {% if pages %}
             <ul>
                 {% for page in pages %}
-                    <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                    <li><a href="{% url 'goto' %}?page_id={{ page.id }}">{{ page.title }}</a></li>
+                    {% if page.views > 1 %}
+                        ({{ page.views }} views)
+                    {% elif page.views == 1 %}
+                        ({{ page.views }} view)
+                    {% endif %}
                 {% endfor %}
             </ul>
         {% else %}
@@ -22,5 +27,33 @@
         {% endif %}
     {% else %}
         The specified category does not exist!
+    {% endif %}
+    <!-- New search form Chapter 15 -->
+    {% if user.is_authenticated %}
+        <div>
+            <form class="form-inline" id="user-form" method="post" action="{% url 'show_category' category.slug %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" type="text" size="50" name="query" value="{{ query }}" id="query">
+                </div>
+                <button class="btn btn-primary" type="submit" name="submit" value="Search">Search</button>
+            </form>
+        </div>
+        <div>
+        {% if result_list %}
+            <h3>Results</h3>
+            <!-- Display search results in an ordered list -->
+            <div class="list-group">
+            {% for result in result_list %}
+                <div class="list-group-item">
+                    <h4 class="list-group-item-heading">
+                        <a href="{{ result.link }}">{{ result.title }}</a>
+                    </h4>
+                    <p class="list-group-item-text">{{ result.summary }}</p>
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+        </div>
     {% endif %}
 {% endblock %}

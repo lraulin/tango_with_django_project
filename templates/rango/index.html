@@ -6,34 +6,46 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Rango says...</h1>
-    {% if user.is_authenticated %}
-        howdy {{ user.username }}!
-    {% else %}
-        hey there partner!
-    {% endif %}
-
-    <h2>Most Liked Categories</h2>
-    <div>
-        {% if categories %}
-        <ul>
-            {% for category in categories %}
-                <li><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a></li>
-            {% endfor %}
-        </ul>
+    <div class="jumbotron">
+        <h1 class="display-3">Rango says...</h1>
+        {% if user.is_authenticated %}
+            howdy {{ user.username }}!
         {% else %}
-            <strong>There are no categories present.</strong>
+            hey there partner!
         {% endif %}
     </div>
-    <h2>Most Viewed Pages</h2>
-    {% if pages %}
-        <ul>
-            {% for page in pages %}
-                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
-            {% endfor %}
-        </ul>
-        {% else %}
-            <strong>There are no pages available.</strong>
-        {% endif %}
+    <div class="row marketing">
+        <div class="col-lg-6">
+            <h2>Most Liked Categories</h2>
+            <p>
+            {% if categories %}
+            <ul class="list-group">
+                {% for category in categories %}
+                    <li class="list-group-item"><a href="{% url 'show_category' category.slug %}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no categories present.</strong>
+            {% endif %}
+            </p>
+        </div>
+        <div class="col-lg-6">
+            <h2>Most Viewed Pages</h2>
+            <p>
+            {% if pages %}
+            <ul class="list-group">
+                {% for page in pages %}
+                    <li class="list-group-item"><a href="{{ page.url }}">{{ page.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no pages available.</strong>
+            {% endif %}
+            </p>
+        </div>
+    </div>
+
+
+
     <p>You have visited {{ visits }} times.</p>
 {% endblock %}

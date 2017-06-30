@@ -28,7 +28,7 @@ SECRET_KEY = '7!)5p!8cz14=$o(eu9x*yd24k#h0d6yu-7&_28j-vec2%h%x!s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lraulin.pythonanywhere.com',]
 
 
 # Application definition

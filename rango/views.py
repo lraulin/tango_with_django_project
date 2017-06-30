@@ -5,6 +5,7 @@ from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from rango.models import Category, Page, UserProfile
 from rango.webhose_search import run_query
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 
 def get_server_side_cookie(request, cookie, default_val=None):
@@ -180,6 +181,7 @@ def track_url(request):
             
     return redirect(url)
 
+
 @login_required
 def register_profile(request):
     form = UserProfileForm()
@@ -229,3 +231,17 @@ def list_profiles(request):
     userprofile_list = UserProfile.objects.all()
 
     return render(request, 'rango/list_profiles.html', {'userprofile_list': userprofile_list})
+
+@login_required
+def like_category(request):
+    cat_id = None
+    if request.method == 'GET'
+        cat_id = request.GET['category_id']
+        likes = 0
+        if cat_id:
+            cat = Category.objects.get(id=int(cat_id))
+            if cat:
+                likes = cat.likes + 1
+                cat.likes = likes
+                cat.save()
+    return HttpResponse(likes)
